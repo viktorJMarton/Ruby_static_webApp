@@ -1,6 +1,6 @@
-# fly.toml file generated for railsstaticapp on 2022-12-14T13:30:21Z
+# fly.toml file generated for microbloglaunch-mv on 2023-01-20T11:30:54Z
 
-app = "railsstaticapp"
+app = "microbloglaunch-mv"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
