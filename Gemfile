@@ -17,7 +17,7 @@ gem "bootsnap",        "1.12.0", require: false
 gem "pg"
 
 group :development, :test do 
-  gem "debug",   "1.5.0", platforms: %i[ mri mingw x64_mingw ]
+ gem "byebug"
 end
 
 group :development do
@@ -34,7 +34,7 @@ group :test do
   gem "guard",                    "2.18.0"
   gem "guard-minitest",           "2.4.6"
   gem 'sqlite3'
-  gem "pg"
+ 
 end
 
 group :production do
