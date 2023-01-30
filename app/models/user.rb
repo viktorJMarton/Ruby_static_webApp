@@ -12,8 +12,8 @@ attr_accessor :remember_token
                     uniqueness: true
   
 
-  has_secure_password
-  validates :password, presence: true, length: {minimum: 6 }
+  has_secure_password # the below added allow_nil  allow the reg with empty passw, but this row includes separate validation
+  validates :password, presence: true, length: {minimum: 6 }, allow_nil: true
   
   #Returns the hash digest of a given string
   def User.digest(string)
@@ -30,6 +30,12 @@ attr_accessor :remember_token
   def remember
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))
+    remember_digest
+  end
+
+   # Returns true if the given user is the current user.
+   def current_user?(user)
+    user && user == current_user
   end
 
   # Returns true if the given token matches the digest.
@@ -44,6 +50,8 @@ attr_accessor :remember_token
     update_attribute(:remember_digest, nil)
   end
 
-
+  def session_token
+    remember_digest || remember
+  end
 
 end
