@@ -17,7 +17,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_select 'div.pagination'
     first_page_of_users = User.paginate(page: 1)
     first_page_of_users.each do |user|
-      assert_select 'a[href=?]', user_path(user), text: user.name
+      assert_select 'a[href=?]', user_path(user), text: user.name  #TODO: Expected at least 1 element matching "a[href="/users/198381282"]", found 0 Expected 0 to be >= 1.
       unless user == @admin
         assert_select 'a[href=?]', user_path(user), text: 'delete'
     end
@@ -34,5 +34,9 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     get users_path
     assert_select 'a', text: 'delete', count: 0
   end
+
+
+  
+
 end
 
