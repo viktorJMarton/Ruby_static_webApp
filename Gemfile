@@ -18,6 +18,8 @@ gem "pg"
 gem "faker",           "2.21.0"
 gem "will_paginate",           "3.3.1"
 gem "bootstrap-will_paginate", "1.0.0"
+gem "image_processing",           "1.12.2"
+gem "active_storage_validations", "0.9.8"
 
 group :development, :test do 
  gem "byebug"
