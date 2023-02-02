@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token,:reset_token
   has_many :microposts, dependent: :destroy
+  has_many :active_relationships, class_name: "Relationship",
+                                  foreign_key:"follower_id",
+                                  dependent: :destroy #Since destroying a user should also destroy that user’s relationships, we’ve added dependent: :destroy to the association
   
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   before_save   :downcase_email
