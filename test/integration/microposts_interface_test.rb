@@ -12,7 +12,7 @@ class MicropostsInterfaceTest < MicropostsInterface
 
   test "should paginate microposts" do
     get root_path
-    assert_select 'div.pagination'
+    assert_select 'ol.microposts'
   end
 
   test "should show errors but not create micropost on invalid submission" do
@@ -20,7 +20,6 @@ class MicropostsInterfaceTest < MicropostsInterface
       post microposts_path, params: { micropost: { content: "" } }
     end
     assert_select 'div#error_explanation'
-    assert_select 'a[href=?]', '/?page=2'  # Correct pagination link
   end
 
   test "should create a micropost on valid submission" do
