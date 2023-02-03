@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  
+  default_url_options :host => "localhost:3000" 
   get 'password_resets/new'
   get 'password_resets/edit'
-  default_url_options :host => "localhost:3000" #TODO: Ask about this  problem. Listing 11.18 
   get 'sessions/new'
   get 'users/new'
 
@@ -18,10 +19,15 @@ Rails.application.routes.draw do
 
     delete "/logout", to: 'sessions#destroy'
     
-    resources :users
+    resources :users do
+      member do
+        get :following, :followers
+      end
+    end
     resources :account_activations, only: [:edit]
     resources :password_resets,     only: [:new, :create, :edit, :update]
     resources :microposts,          only: [:create, :destroy]
+    resources :relationships,       only: [:create, :destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

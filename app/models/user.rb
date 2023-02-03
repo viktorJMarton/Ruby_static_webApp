@@ -3,7 +3,16 @@ class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key:"follower_id",
-                                  dependent: :destroy #Since destroying a user should also destroy that user’s relationships, we’ve added dependent: :destroy to the association
+                                  dependent: :destroy                     #Since destroying a user should also destroy that user’s relationships,
+                                                                          #we’ve added dependent: :destroy to the association
+
+  has_many :passive_relationships, class_name:  "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent:   :destroy
+                                   
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
+  
   
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   before_save   :downcase_email
@@ -102,6 +111,20 @@ class User < ApplicationRecord
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  #Follows, unfollows, following check
+
+  def follow(other_user)
+    following << other_user unless self == other_user
+  end
+
+  def unfollow(other_user)
+    following.delete(other_user)
+  end
+
+  def following?(other_user)
+    following.include?(other_user)
   end
 
 end
